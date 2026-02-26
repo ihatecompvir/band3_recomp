@@ -97,3 +97,8 @@ extern "C" PPC_FUNC(StreamChecksum__ValidateChecksum)
 {
 	ctx.r3.u64 = 1;
 }
+// file checksum patch, just return
+extern "C" PPC_FUNC(PlatformMgr__SetDiskError)
+{
+	return;
+}

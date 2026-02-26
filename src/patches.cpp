@@ -102,3 +102,57 @@ extern "C" PPC_FUNC(PlatformMgr__SetDiskError)
 {
 	return;
 }
+
+// nuke metamusic calls, if enabled
+extern "C" void __imp__MetaMusic__Load(PPCContext& ctx, uint8_t* base);
+extern "C" PPC_FUNC(MetaMusic__Load)
+{
+    if (band3::GetConfig().disable_metamusic) return;
+    __imp__MetaMusic__Load(ctx, base);
+}
+extern "C" void __imp__MetaMusic__Poll(PPCContext& ctx, uint8_t* base);
+extern "C" PPC_FUNC(MetaMusic__Poll)
+{
+    if (band3::GetConfig().disable_metamusic) return;
+    __imp__MetaMusic__Poll(ctx, base);
+}
+extern "C" void __imp__MetaMusic__Start(PPCContext& ctx, uint8_t* base);
+extern "C" PPC_FUNC(MetaMusic__Start)
+{
+    if (band3::GetConfig().disable_metamusic) return;
+    __imp__MetaMusic__Start(ctx, base);
+}
+extern "C" void __imp__MetaMusic__Loaded(PPCContext& ctx, uint8_t* base);
+extern "C" PPC_FUNC(MetaMusic__Loaded)
+{
+    if (band3::GetConfig().disable_metamusic) {
+        ctx.r3.u64 = 1;
+        return;
+    }
+    __imp__MetaMusic__Loaded(ctx, base);
+}
+
+//Set venue from ini hook, reloads the entire config when setvenue is called, sure
+//also doesnt clear allocations for previous strings. Bad? Maybe!
+extern "C" void __imp__MetaPerformer__SetVenue(PPCContext& ctx, uint8_t* base);
+extern "C" PPC_FUNC(MetaPerformer__SetVenue)
+{
+    band3::LoadConfig();
+    const std::string& forced_venue = band3::GetConfig().forced_venue;
+
+    static std::string cached_venue;
+    static uint32_t str_guest = 0;
+
+    if (!forced_venue.empty() && forced_venue != "false") {
+        if (cached_venue != forced_venue) {
+            cached_venue = forced_venue;
+            auto* mem = rex::kernel::kernel_memory();
+            str_guest = mem->SystemHeapAlloc(static_cast<uint32_t>(cached_venue.size() + 1), 1);
+            std::memcpy(base + str_guest, cached_venue.c_str(), cached_venue.size() + 1);
+            REXLOG_INFO("Forcing venue to \"{}\"", cached_venue);
+        }
+        ctx.r4.u64 = str_guest;
+    }
+
+    __imp__MetaPerformer__SetVenue(ctx, base);
+}

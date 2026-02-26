@@ -28,8 +28,12 @@ void LoadConfig(const char* path) {
         reader.GetInteger("controller", "type", g_config.controller_type);
     g_config.sync =
         reader.GetInteger("rnd", "sync", g_config.sync);
-    REXLOG_INFO("Config: controller_type={}, sync={}",
-        g_config.controller_type, g_config.sync);
+    g_config.forced_venue =
+        reader.Get("venue", "forced_venue", g_config.forced_venue);
+    g_config.disable_metamusic =
+        reader.GetBoolean("patches", "disable_metamusic", g_config.disable_metamusic);
+    REXLOG_INFO("Config: controller_type={}, sync={}, forced_venue={}, disable_metamusic={}",
+        g_config.controller_type, g_config.sync, g_config.forced_venue, g_config.disable_metamusic);
 }
 
 const std::vector<std::string>& GetArgs() {

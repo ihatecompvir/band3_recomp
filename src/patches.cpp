@@ -3,9 +3,13 @@
 #include <rex/kernel/kernel_state.h>
 #include <rex/logging.h>
 #include <cstring>
+#include <vector>
+#include <string_view>
 #include <set>
 #include "generated/band3_init.h"
 #include "config.h"
+#include <random>
+#include <cstdio>
 
 static std::set<size_t> g_consumed_args;
 
@@ -138,21 +142,87 @@ extern "C" void __imp__MetaPerformer__SetVenue(PPCContext& ctx, uint8_t* base);
 extern "C" PPC_FUNC(MetaPerformer__SetVenue)
 {
     band3::LoadConfig();
-    const std::string& forced_venue = band3::GetConfig().forced_venue;
+    const std::string& forced = band3::GetConfig().forced_venue;
 
-    static std::string cached_venue;
-    static uint32_t str_guest = 0;
-
-    if (!forced_venue.empty() && forced_venue != "false") {
-        if (cached_venue != forced_venue) {
-            cached_venue = forced_venue;
-            auto* mem = rex::kernel::kernel_memory();
-            str_guest = mem->SystemHeapAlloc(static_cast<uint32_t>(cached_venue.size() + 1), 1);
-            std::memcpy(base + str_guest, cached_venue.c_str(), cached_venue.size() + 1);
-            REXLOG_INFO("Forcing venue to \"{}\"", cached_venue);
-        }
-        ctx.r4.u64 = str_guest;
+    if (forced.empty() || forced == "false") {
+        __imp__MetaPerformer__SetVenue(ctx, base);
+        return;
     }
 
+    static const char* small_club[] = { "01","02","03","04","05","06","10","11","13","14","15" };
+    static const char* big_club[]   = { "01","02","04","15","17" };
+    static const char* arena[]      = { "01","04","06","07","10","11","12" };
+    static const char* festival[]   = { "01","02" };
+    static const char* video[]      = { "01","02","03","04","05","06","07" };
+
+    static std::mt19937 rng{ std::random_device{}() };
+
+    auto pick = [](const char* const* list, size_t n) -> const char* {
+        std::uniform_int_distribution<size_t> dist(0, n - 1);
+        return list[dist(rng)];
+    };
+
+    auto trim = [](std::string_view s) {
+        while (!s.empty() && (s.front() == ' ' || s.front() == '\t')) s.remove_prefix(1);
+        while (!s.empty() && (s.back()  == ' ' || s.back()  == '\t')) s.remove_suffix(1);
+        return s;
+    };
+
+    std::string choice;
+    {
+        std::vector<std::string_view> items;
+        std::string_view sv(forced);
+
+        while (!sv.empty()) {
+            size_t comma = sv.find(',');
+            std::string_view part = (comma == std::string_view::npos) ? sv : sv.substr(0, comma);
+            part = trim(part);
+            if (!part.empty() && part != "false")
+                items.push_back(part);
+            if (comma == std::string_view::npos) break;
+            sv.remove_prefix(comma + 1);
+        }
+
+        if (items.empty()) {
+            __imp__MetaPerformer__SetVenue(ctx, base);
+            return;
+        }
+
+        std::uniform_int_distribution<size_t> dist(0, items.size() - 1);
+        choice.assign(items[dist(rng)]);
+    }
+
+    std::string resolved = choice;
+
+    struct VenueGroup { const char* name; const char* const* list; size_t count; };
+    static const VenueGroup groups[] = {
+        { "small_club", small_club, std::size(small_club) },
+        { "big_club",   big_club,   std::size(big_club)   },
+        { "arena",      arena,      std::size(arena)      },
+        { "festival",   festival,   std::size(festival)   },
+        { "video",      video,      std::size(video)      },
+    };
+
+    for (const auto& g : groups) {
+        if (choice == g.name) {
+            char buf[32];
+            std::snprintf(buf, sizeof(buf), "%s_%s", g.name, pick(g.list, g.count));
+            resolved = buf;
+            break;
+        }
+    }
+
+    static std::string cached;
+    static uint32_t str_guest = 0;
+
+    if (cached != resolved) {
+        cached = resolved;
+        auto* mem = rex::kernel::kernel_memory();
+        str_guest = mem->SystemHeapAlloc(static_cast<uint32_t>(cached.size() + 1), 1);
+        std::memcpy(base + str_guest, cached.c_str(), cached.size() + 1);
+        REXLOG_INFO("Forcing venue to \"{}\"", cached);
+    }
+
+    ctx.r4.u64 = str_guest;
     __imp__MetaPerformer__SetVenue(ctx, base);
 }

@@ -7,6 +7,7 @@
 #include <windows.h>
 #else
 #include <cstdlib>
+#include <fstream>
 #endif
 
 namespace band3 {
@@ -66,8 +67,12 @@ const std::vector<std::string>& GetArgs() {
             g_args.push_back(std::move(s));
         }
 #else
-        for (int i = 0; i < __argc; i++) {
-            g_args.push_back(__argv[i]);
+        std::ifstream cmdline("/proc/self/cmdline", std::ios::binary);
+        if (cmdline) {
+            std::string arg;
+            while (std::getline(cmdline, arg, '\0')) {
+                g_args.push_back(std::move(arg));
+            }
         }
 #endif
     }

@@ -217,7 +217,7 @@ extern "C" PPC_FUNC(MetaPerformer__SetVenue)
 
     if (cached != resolved) {
         cached = resolved;
-        auto* mem = rex::kernel::kernel_memory();
+        auto* mem = rex::system::kernel_memory();
         str_guest = mem->SystemHeapAlloc(static_cast<uint32_t>(cached.size() + 1), 1);
         std::memcpy(base + str_guest, cached.c_str(), cached.size() + 1);
         REXLOG_INFO("Forcing venue to \"{}\"", cached);

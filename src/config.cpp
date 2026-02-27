@@ -28,8 +28,29 @@ void LoadConfig(const char* path) {
         reader.GetInteger("controller", "type", g_config.controller_type);
     g_config.sync =
         reader.GetInteger("rnd", "sync", g_config.sync);
-    REXLOG_INFO("Config: controller_type={}, sync={}",
-        g_config.controller_type, g_config.sync);
+    g_config.fullscreen =
+        reader.GetBoolean("window", "fullscreen", g_config.fullscreen);
+    g_config.width =
+        reader.GetInteger("window", "width", g_config.width);
+    g_config.height =
+        reader.GetInteger("window", "height", g_config.height);
+    g_config.fast_start =
+        reader.GetBoolean("game", "fast_start", g_config.fast_start);
+    g_config.debug_overlay =
+        reader.GetBoolean("debug", "overlay", g_config.debug_overlay);
+    g_config.log_level =
+        reader.Get("debug", "log_level", g_config.log_level);
+    REXLOG_INFO("Config: controller_type={}, sync={}, fullscreen={}, "
+        "width={}, height={}, fast_start={}, debug_overlay={}, log_level={}",
+        g_config.controller_type, g_config.sync, g_config.fullscreen,
+        g_config.width, g_config.height, g_config.fast_start,
+        g_config.debug_overlay, g_config.log_level);
+
+    // Inject config-driven args into the command line
+    if (g_config.fast_start) {
+        GetArgs(); // ensure g_args is initialized
+        g_args.push_back("fast");
+    }
 }
 
 const std::vector<std::string>& GetArgs() {

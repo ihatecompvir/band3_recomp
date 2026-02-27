@@ -1,11 +1,11 @@
-#include <rex/runtime/guest/context.h>
-#include <rex/runtime/guest/function.h>
-#include <rex/runtime/guest/types.h>
+#include <rex/ppc/context.h>
+#include <rex/ppc/function.h>
+#include <rex/ppc/types.h>
 #include <rex/logging.h>
 #include <filesystem>
 #include <system_error>
 
-using namespace rex::runtime::guest;
+using namespace rex::ppc;
 
 extern "C" void __imp__NewFile(PPCContext& ctx, uint8_t* base);
 
@@ -44,6 +44,7 @@ extern "C" PPC_FUNC(NewFile) {
                 if (!exists && sanitized.begin() != sanitized.end() && *sanitized.begin() != "assets") {
                     exists = std::filesystem::exists(std::filesystem::path("assets") / sanitized, ec);
                 }
+
 
                 if (exists) {
                     REXLOG_INFO("NewFile: {} [flags={:#x}]", cc, flags);

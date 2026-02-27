@@ -1,6 +1,6 @@
-#include <rex/runtime/guest/context.h>
-#include <rex/runtime/guest/function.h>
-#include <rex/kernel/kernel_state.h>
+#include <rex/ppc/context.h>
+#include <rex/ppc/function.h>
+#include <rex/system/kernel_state.h>
 #include <rex/logging.h>
 #include <cstring>
 #include <set>
@@ -60,7 +60,7 @@ extern "C" PPC_FUNC(OptionStr)
 		if (g_consumed_args.count(i)) continue;
 		if (args[i] == option && i + 1 < args.size()) {
 			const std::string& value = args[i + 1];
-			auto* mem = rex::kernel::kernel_memory();
+			auto* mem = rex::system::kernel_memory();
 			uint32_t len = static_cast<uint32_t>(value.size() + 1);
 			uint32_t str_guest = mem->SystemHeapAlloc(len, 1);
 			std::memcpy(base + str_guest, value.c_str(), len);

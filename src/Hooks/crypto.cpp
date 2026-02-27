@@ -1,6 +1,6 @@
-#include <rex/runtime/guest/context.h>
-#include <rex/runtime/guest/function.h>
-#include <rex/kernel/kernel_state.h>
+#include <rex/ppc/context.h>
+#include <rex/ppc/function.h>
+#include <rex/system/kernel_state.h>
 #include <rex/logging.h>
 #include <cstring>
 
@@ -19,7 +19,7 @@ static void EnsureCryptoBuffers(uint8_t* base) {
     if (g_aes_state_guest != 0) return;
 
 	// allocate our heap memory inside the guest
-    auto* mem = rex::kernel::kernel_memory();
+    auto* mem = rex::system::kernel_memory();
     g_aes_state_guest = mem->SystemHeapAlloc(0x160, 16);
     g_keyset_guest = mem->SystemHeapAlloc(64, 16);
     g_feed_guest = mem->SystemHeapAlloc(0x10, 16);

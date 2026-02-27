@@ -9,7 +9,13 @@ struct Config {
     long controller_type = 7;
     long sync = -1;
     std::string forced_venue = "false";
+    bool fullscreen = false;
+    long width = 1280;
+    long height = 720;
+    bool fast_start = false;
     bool disable_metamusic = false;
+    bool debug_overlay = true;
+    std::string log_level = "info";
 };
 
 const Config& GetConfig();

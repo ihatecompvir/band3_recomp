@@ -222,7 +222,7 @@ d3d12_readback_resolve = true
 0x82275674 = { name = "rex_sub_82275674", size = 0x20 }
 0x822756A0 = { name = "rex_sub_822756A0", size = 0x80 }
 0x82275720 = { name = "rex_sub_82275720", size = 0x28 }
-0x82275750 = { name = "SyncProp", size = 0x90 }
+0x82275750 = { name = "SyncProp_symbol", size = 0x90 }
 0x822757E0 = { name = "rex_sub_822757E0", size = 0x28 }
 0x82275808 = { name = "rex_sub_82275808", size = 0x74 }
 0x82275880 = { name = "rex_sub_82275880", size = 0x70 }
@@ -1750,7 +1750,7 @@ d3d12_readback_resolve = true
 0x822A113C = { name = "rex_sub_822A113C", size = 0x28 }
 0x822A1170 = { name = "PropSync_RndMat", size = 0xB4 }
 0x822A1224 = { name = "rex_sub_822A1224", size = 0x28 }
-0x822A1258 = { name = "PropSync_class_RndTex", size = 0xB4 }
+0x822A1258 = { name = "PropSync_RndTex", size = 0xB4 }
 0x822A130C = { name = "rex_sub_822A130C", size = 0x28 }
 0x822A1340 = { name = "rex_sub_822A1340", size = 0xB4 }
 0x822A13F4 = { name = "rex_sub_822A13F4", size = 0x28 }

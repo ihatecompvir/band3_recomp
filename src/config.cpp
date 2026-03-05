@@ -63,6 +63,11 @@ void LoadConfig(const char* path) {
         g_args.push_back("-lang");
         g_args.push_back(g_config.lang);
     }
+
+    // hard defines for various usecases
+    // Rock Band 3 DX identifier
+    g_args.push_back("-define");
+    g_args.push_back("MHX_PC");
 }
 
 const std::vector<std::string>& GetArgs() {

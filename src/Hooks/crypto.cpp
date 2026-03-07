@@ -18,7 +18,7 @@ extern "C" void __imp__XeCryptAesCbc(PPCContext& ctx, uint8_t* base);
 static void EnsureCryptoBuffers(uint8_t* base) {
     if (g_aes_state_guest != 0) return;
 
-	// allocate our heap memory inside the guest
+    // allocate our heap memory inside the guest
     auto* mem = rex::system::kernel_memory();
     g_aes_state_guest = mem->SystemHeapAlloc(0x160, 16);
     g_keyset_guest = mem->SystemHeapAlloc(64, 16);
@@ -30,7 +30,7 @@ static void EnsureCryptoBuffers(uint8_t* base) {
 }
 
 // XeKeysSetKey(uint32_t key_index, void* key_buffer, uint32_t key_size)
-extern "C" PPC_FUNC(XeKeysSetKey)
+extern "C" PPC_FUNC(XeKeysSetKey_impl)
 {
     EnsureCryptoBuffers(base);
 
@@ -49,10 +49,20 @@ extern "C" PPC_FUNC(XeKeysSetKey)
 
     ctx.r3.u64 = 0;
 }
-extern "C" __attribute__((alias("XeKeysSetKey"))) void __imp__XeKeysSetKey(PPCContext& ctx, uint8_t* base);
+extern "C" void band_XeKeysSetKey(uint32_t key_index, ppc_pvoid_t key_buffer, uint32_t key_size) {
+    uint8_t* base = rex::g_memory_base;
+    if (!base) return;
+
+    PPCContext ctx{};
+    ctx.r3.u32 = key_index;
+    ctx.r4.u32 = key_buffer ? key_buffer.guest_address() : 0;
+    ctx.r5.u32 = key_size;
+
+    XeKeysSetKey_impl(ctx, base);
+}
 
 // XeKeysAesCbc(uint32_t key_index, void* inp, uint32_t inp_size, void* out, void* feed, uint32_t encrypt)
-extern "C" PPC_FUNC(XeKeysAesCbc)
+extern "C" PPC_FUNC(XeKeysAesCbc_impl)
 {
     EnsureCryptoBuffers(base);
 
@@ -80,4 +90,20 @@ extern "C" PPC_FUNC(XeKeysAesCbc)
 
     ctx.r3.u64 = 0;
 }
-extern "C" __attribute__((alias("XeKeysAesCbc"))) void __imp__XeKeysAesCbc(PPCContext& ctx, uint8_t* base);
+extern "C" void band_XeKeysAesCbc(uint32_t key_index, ppc_pvoid_t inp, uint32_t inp_size, ppc_pvoid_t out, ppc_pvoid_t feed, uint32_t encrypt) {
+    uint8_t* base = rex::g_memory_base;
+    if (!base) return;
+
+    PPCContext ctx{};
+    ctx.r3.u32 = key_index;
+    ctx.r4.u32 = inp  ? inp.guest_address()  : 0;
+    ctx.r5.u32 = inp_size;
+    ctx.r6.u32 = out  ? out.guest_address()  : 0;
+    ctx.r7.u32 = feed ? feed.guest_address() : 0;
+    ctx.r8.u32 = encrypt;
+
+    XeKeysAesCbc_impl(ctx, base);
+}
+
+PPC_HOOK(__imp__XeKeysSetKey, band_XeKeysSetKey);
+PPC_HOOK(__imp__XeKeysAesCbc, band_XeKeysAesCbc);

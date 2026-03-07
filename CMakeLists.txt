@@ -54,6 +54,7 @@ target_link_libraries(band3 PRIVATE
     rex::graphics
     rex::ui
 )
+target_link_options(band3 PRIVATE "-Xlinker" "/FORCE:MULTIPLE")
 
 # Platform entry point, ReXApp source, and platform-specific settings
 rexglue_configure_target(band3)

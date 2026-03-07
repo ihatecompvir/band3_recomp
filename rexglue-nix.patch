@@ -1,0 +1,75 @@
+diff --git a/cmake/rexglue_install.cmake b/cmake/rexglue_install.cmake
+index af05fd9..41ba6fd 100644
+--- a/cmake/rexglue_install.cmake
++++ b/cmake/rexglue_install.cmake
+@@ -133,34 +133,3 @@ install(EXPORT rexglueTargets
+     NAMESPACE rex::
+     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/rexglue
+ )
+-
+-# Register in the CMake User Package Registry after install.
+-# This makes find_package(rexglue) work with no REXSDK env var or CMAKE_PREFIX_PATH.
+-# Multiple SxS installs coexist. Each prefix gets a unique hash entry.
+-#
+-# Windows: HKCU\Software\Kitware\CMake\Packages\rexglue  (REG_SZ, value name = MD5 hash)
+-# Unix:    ~/.cmake/packages/rexglue/<hash>               (file containing prefix path)
+-install(CODE [[
+-    # Normalize path casing on Windows before hashing to avoid duplicate entries
+-    if(CMAKE_HOST_WIN32)
+-        string(TOLOWER "${CMAKE_INSTALL_PREFIX}" _reg_key)
+-    else()
+-        set(_reg_key "${CMAKE_INSTALL_PREFIX}")
+-    endif()
+-    string(MD5 _hash "${_reg_key}")
+-
+-    if(CMAKE_HOST_WIN32)
+-        # Windows CMake User Package Registry lives in HKCU (not the filesystem)
+-        set(_reg_root "HKCU\\Software\\Kitware\\CMake\\Packages\\rexglue")
+-        execute_process(
+-            COMMAND reg add "${_reg_root}" /v "${_hash}" /t REG_SZ /d "${CMAKE_INSTALL_PREFIX}" /f
+-            OUTPUT_QUIET ERROR_QUIET
+-        )
+-    else()
+-        set(_reg_dir "$ENV{HOME}/.cmake/packages/rexglue")
+-        file(MAKE_DIRECTORY "${_reg_dir}")
+-        file(WRITE "${_reg_dir}/${_hash}" "${CMAKE_INSTALL_PREFIX}")
+-    endif()
+-    message(STATUS "Registered rexglue in CMake user package registry")
+-    message(STATUS "  -> ${CMAKE_INSTALL_PREFIX}")
+-]])
+diff --git a/thirdparty/CMakeLists.txt b/thirdparty/CMakeLists.txt
+index a4ec5d4..2584ce9 100644
+--- a/thirdparty/CMakeLists.txt
++++ b/thirdparty/CMakeLists.txt
+@@ -5,31 +5,8 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+ # Verify git submodules are initialized (only vendored ones)
+ #=============================================================================
+ set(REQUIRED_SUBMODULES
+-    cli11
+-    libmspack
+-    FFmpeg
+-    tomlplusplus
+-    simde
+-    xxHash
+-    spdlog
+-    fmt
+-    snappy
+-    utfcpp
+-    imgui
+-    sdl2
+ )
+ 
+-if(REXGLUE_USE_VULKAN)
+-    list(APPEND REQUIRED_SUBMODULES
+-        volk vulkan-headers vulkan-memory-allocator
+-        spirv-headers spirv-tools glslang
+-    )
+-endif()
+-
+-if(REXGLUE_BUILD_TESTS)
+-    list(APPEND REQUIRED_SUBMODULES catch2)
+-endif()
+-
+ foreach(submodule ${REQUIRED_SUBMODULES})
+     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${submodule}/.git")
+         message(FATAL_ERROR

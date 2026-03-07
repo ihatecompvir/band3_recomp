@@ -21,6 +21,8 @@ struct Config {
     bool compress_character_textures = false;
     long main_heap_size = 0;
     long char_heap_size = 0;
+    std::string username;
+    long max_queued_frames = 3;
     bool debug_overlay = true;
     std::string log_level = "info";
 };

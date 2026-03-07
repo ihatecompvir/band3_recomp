@@ -2963,10 +2963,10 @@ d3d12_readback_resolve = true
 0x822C115C = { name = "rex_sub_822C115C", size = 0x44 }
 0x822C11A8 = { name = "rex_sub_822C11A8", size = 0xB4 }
 0x822C125C = { name = "rex_sub_822C125C", size = 0x20 }
-0x822C1280 = { name = "rex_sub_822C1280", size = 0x80 }
-0x822C1300 = { name = "rex_sub_822C1300", size = 0xA4 }
-0x822C13A8 = { name = "rex_sub_822C13A8", size = 0x2A8 }
-0x822C1650 = { name = "rex_sub_822C1650", size = 0xC4 }
+0x822C1280 = { name = "Normalize_Vector3", size = 0x80 }
+0x822C1300 = { name = "Interp_Vector3", size = 0xA4 }
+0x822C13A8 = { name = "Multiply_Matrix3", size = 0x2A8 }
+0x822C1650 = { name = "Normalize_Matrix3", size = 0xC4 }
 0x822C1718 = { name = "rex_sub_822C1718", size = 0xB8 }
 0x822C17D0 = { name = "rex_sub_822C17D0", size = 0x8C }
 0x822C1860 = { name = "rex_sub_822C1860", size = 0x98 }
@@ -11073,7 +11073,7 @@ d3d12_readback_resolve = true
 0x823A4DC0 = { name = "rex_sub_823A4DC0", size = 0xC }
 0x823A4DD0 = { name = "rex_sub_823A4DD0", size = 0x44 }
 0x823A4E18 = { name = "rex_sub_823A4E18", size = 0xB0 }
-0x823A4EC8 = { name = "rex_sub_823A4EC8", size = 0x78 }
+0x823A4EC8 = { name = "CharHair__GetFPS", size = 0x78 }
 0x823A4F40 = { name = "rex_sub_823A4F40", size = 0x68 }
 0x823A4FA8 = { name = "rex_sub_823A4FA8", size = 0x104 }
 0x823A50B0 = { name = "rex_sub_823A50B0", size = 0x110 }
@@ -11091,7 +11091,7 @@ d3d12_readback_resolve = true
 0x823A5540 = { name = "rex_sub_823A5540", size = 0xF8 }
 0x823A5638 = { name = "rex_sub_823A5638", size = 0x160 }
 0x823A5798 = { name = "rex_sub_823A5798", size = 0xFC }
-0x823A5898 = { name = "rex_sub_823A5898", size = 0x9A8 }
+0x823A5898 = { name = "CharHair__Simulate", size = 0x9A8 }
 0x823A6240 = { name = "rex_sub_823A6240", size = 0x1D0 }
 0x823A6410 = { name = "rex_sub_823A6410", size = 0xB0 }
 0x823A64C8 = { name = "rex_sub_823A64C8", size = 0x48 }
@@ -16922,7 +16922,7 @@ d3d12_readback_resolve = true
 0x8245CDB8 = { name = "rex_sub_8245CDB8", size = 0x78 }
 0x8245CE30 = { name = "rex_sub_8245CE30", size = 0x14 }
 0x8245CE48 = { name = "rex_sub_8245CE48", size = 0x24 }
-0x8245CE70 = { name = "rex_sub_8245CE70", size = 0xC4 }
+0x8245CE70 = { name = "RndWind__GetWind", size = 0xC4 }
 0x8245CF38 = { name = "RndWind__SyncLoops", size = 0x7C }
 0x8245CFB8 = { name = "rex_sub_8245CFB8", size = 0x68 }
 0x8245D028 = { name = "rex_sub_8245D028", size = 0x60 }
@@ -22802,7 +22802,7 @@ d3d12_readback_resolve = true
 0x8251C928 = { name = "rex_sub_8251C928", size = 0x34 }
 0x8251C960 = { name = "rex_sub_8251C960", size = 0xA4 }
 0x8251CA08 = { name = "rex_sub_8251CA08", size = 0x48 }
-0x8251CA58 = { name = "rex_sub_8251CA58", size = 0xA8 }
+0x8251CA58 = { name = "PlatformMgr__GetName", size = 0xA8 }
 0x8251CB00 = { name = "rex_sub_8251CB00", size = 0x20 }
 0x8251CB20 = { name = "rex_sub_8251CB20", size = 0x84 }
 0x8251CBA8 = { name = "rex_sub_8251CBA8", size = 0x1C }

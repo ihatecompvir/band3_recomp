@@ -49,6 +49,7 @@ class Band3App : public rex::ReXApp {
   void OnPostSetup() override {
     band3::LoadConfig();
     rex::cvar::SetFlagByName("log_level", band3::GetConfig().log_level);
+    rex::cvar::SetFlagByName("audio_maxqframes", std::to_string(band3::GetConfig().max_queued_frames));
   }
 
   void OnCreateDialogs(rex::ui::ImGuiDrawer* drawer) override {

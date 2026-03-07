@@ -247,7 +247,7 @@ loc_824BDC9C:
 	ctx.r3.u64 = ctx.r29.u64;
 	// bl Normalize
 	ctx.lr = 0x824BDCD4;
-	rex_sub_822C1280(ctx, base);
+	Normalize_Vector3(ctx, base);
 	// fsubs f0,f28,f29
 	ctx.fpscr.disableFlushMode();
 	ctx.f0.f64 = double(float(ctx.f28.f64 - ctx.f29.f64));

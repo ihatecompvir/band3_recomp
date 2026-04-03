@@ -43,7 +43,7 @@ class Band3App : public rex::ReXApp {
     REXCVAR_SET(log_level, std::string("info"));
     return std::unique_ptr<Band3App>(new Band3App(ctx, "band3",
         {PPC_CODE_BASE, PPC_CODE_SIZE, PPC_IMAGE_BASE,
-         PPC_IMAGE_SIZE, PPCFuncMappings}));
+         PPC_IMAGE_SIZE, PPCFuncMappings, REXCRT_HEAP}));
   }
 
   void OnPostSetup() override {

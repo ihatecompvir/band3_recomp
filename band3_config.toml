@@ -10,6 +10,65 @@ longjmp_address = 0x82BBB620
 setjmp_address = 0x82BBBA50
 
 d3d12_readback_resolve = true
+[rexcrt]
+# File I/O
+#CreateFileA             = 0x
+#ReadFile                = 0x
+#WriteFile               = 0x
+#SetFilePointer          = 0x
+#GetFileSize             = 0x
+#GetFileSizeEx           = 0x
+#SetEndOfFile            = 0x
+#FlushFileBuffers        = 0x
+#DeleteFileA             = 0x
+#CloseHandle             = 0x
+#FindFirstFileA          = 0x
+#FindNextFileA           = 0x
+#FindClose               = 0x
+#CreateDirectoryA        = 0x
+#MoveFileA               = 0x
+#SetFileAttributesA      = 0x
+#GetFileAttributesA      = 0x
+#GetFileAttributesExA    = 0x
+#SetFilePointerEx        = 0x
+#SetFileTime             = 0x
+#CompareFileTime         = 0x
+#CopyFileA               = 0x
+RemoveDirectoryA        = 0x828401E8
+#GetFileType             = 0x
+
+# Heap
+RtlAllocateHeap         = 0x82842FF0
+RtlFreeHeap             = 0x828438E8
+RtlSizeHeap             = 0x82842268
+RtlReAllocateHeap       = 0x82843BE0
+
+# Memory
+memcpy                  = 0x8282A900
+memmove                 = 0x8282A840
+memset                  = 0x8282AE30
+memchr                  = 0x82C3E5C0
+XMemCpy                 = 0x82840A78
+XMemSet                 = 0x82BBE460
+XMemSet128              = 0x828408C8
+#memset_vmx              = 0x
+memcpy_s                = 0x82835BB8
+#memmove_s               = 0x
+
+# String
+strncmp                 = 0x8282B310
+strncpy                 = 0x8282B238
+strchr                  = 0x8282C3A0
+strstr                  = 0x8282B298
+strrchr                 = 0x8282C3A0
+strtok                  = 0x8282D8A0
+#_stricmp                = 0x
+strcpy_s                = 0x8282B0B8
+#lstrlenA                = 0x
+#lstrcpyA                = 0x
+#lstrcpynA               = 0x
+#lstrcatA                = 0x
+#lstrcmpiA               = 0x
 
 [functions]
 0x82270000 = { name = "App_dt", size = 0x14 }
@@ -50609,21 +50668,14 @@ d3d12_readback_resolve = true
 0x8282A2B0 = { name = "rex_sub_8282A2B0", size = 0x54 }
 0x8282A310 = { name = "rex_sub_8282A310", size = 0x104 }
 0x8282A418 = { name = "register_global_object", size = 0x28 }
-0x8282A440 = { name = "_strchr", size = 0x3C }
 0x8282A488 = { name = "rex_sub_8282A488", size = 0xD0 }
 0x8282A560 = { name = "rex_sub_8282A560", size = 0x124 }
 0x8282A690 = { name = "construct_array", size = 0x110 }
-0x8282A840 = { name = "_memmove", size = 0xBC }
-0x8282A900 = { name = "_memcpy", size = 0x488 }
 0x8282AD88 = { name = "_blkmov", size = 0xA8 }
-0x8282AE30 = { name = "_memset", size = 0xA0 }
 0x8282AED0 = { name = "rex_sub_8282AED0", size = 0x5C }
 0x8282AF30 = { name = "_fmod", size = 0x184 }
 0x8282B0B8 = { name = "rex_sub_8282B0B8", size = 0xB4 }
 0x8282B170 = { name = "rex_sub_8282B170", size = 0xC8 }
-0x8282B238 = { name = "_strncpy", size = 0x5C }
-0x8282B298 = { name = "_strstr", size = 0x78 }
-0x8282B310 = { name = "_strncmp", size = 0x4C }
 0x8282B360 = { name = "_modf", size = 0x130 }
 0x8282B490 = { name = "rex_sub_8282B490", size = 0xE0 }
 0x8282B570 = { name = "_cos", size = 0xE0 }
@@ -50635,7 +50687,6 @@ d3d12_readback_resolve = true
 0x8282BC50 = { name = "rex_sub_8282BC50", size = 0x188 }
 0x8282BDD8 = { name = "_pow", size = 0x4E4 }
 0x8282C2C0 = { name = "_tan", size = 0xD4 }
-0x8282C3A0 = { name = "_strrchr", size = 0x58 }
 0x8282C3F8 = { name = "_atan", size = 0xE4 }
 0x8282C4E0 = { name = "_atan2", size = 0x130 }
 0x8282C610 = { name = "rex_sub_8282C610", size = 0x3C }
@@ -50663,7 +50714,6 @@ d3d12_readback_resolve = true
 0x8282D768 = { name = "rex_sub_8282D768", size = 0xF4 }
 0x8282D860 = { name = "rex_sub_8282D860", size = 0x24 }
 0x8282D888 = { name = "rex_sub_8282D888", size = 0x18 }
-0x8282D8A0 = { name = "_strtok", size = 0x118 }
 0x8282D9B8 = { name = "rex_sub_8282D9B8", size = 0xC }
 0x8282D9D0 = { name = "rex_sub_8282D9D0", size = 0x80 }
 0x8282DA50 = { name = "rex_sub_8282DA50", size = 0x8C }
@@ -50816,7 +50866,6 @@ d3d12_readback_resolve = true
 0x82835240 = { name = "rex_sub_82835240", size = 0x1AC }
 0x828353F0 = { name = "rex_sub_828353F0", size = 0x618 }
 0x82835A10 = { name = "rex_sub_82835A10", size = 0x1A8 }
-0x82835BB8 = { name = "rex_sub_82835BB8", size = 0xAC }
 0x82835C68 = { name = "rex_sub_82835C68", size = 0xD4 }
 0x82835D40 = { name = "rex_sub_82835D40", size = 0x84 }
 0x82835DD0 = { name = "rex_sub_82835DD0", size = 0x28 }
@@ -50988,7 +51037,6 @@ d3d12_readback_resolve = true
 0x8283FF00 = { name = "rex_sub_8283FF00", size = 0x170 }
 0x82840070 = { name = "rex_sub_82840070", size = 0x68 }
 0x828400D8 = { name = "_GetDiskFreeSpaceExA", size = 0x110 }
-0x828401E8 = { name = "rex_sub_828401E8", size = 0x58 }
 0x82840240 = { name = "rex_sub_82840240", size = 0x1F4 }
 0x82840438 = { name = "rex_sub_82840438", size = 0x70 }
 0x828404A8 = { name = "rex_sub_828404A8", size = 0xC0 }
@@ -50997,9 +51045,7 @@ d3d12_readback_resolve = true
 0x828406C0 = { name = "rex_sub_828406C0", size = 0xC4 }
 0x82840788 = { name = "rijndael_setup", size = 0x94 }
 0x82840820 = { name = "rijndael_ecb_decrypt", size = 0xA4 }
-0x828408C8 = { name = "rex_sub_828408C8", size = 0xFC }
 0x828409C8 = { name = "rex_sub_828409C8", size = 0xAC }
-0x82840A78 = { name = "rex_sub_82840A78", size = 0x2F4 }
 0x82840D70 = { name = "rex_sub_82840D70", size = 0x68 }
 0x82840DD8 = { name = "rex_sub_82840DD8", size = 0x11C }
 0x82840EF8 = { name = "rex_sub_82840EF8", size = 0x30 }
@@ -51017,14 +51063,10 @@ d3d12_readback_resolve = true
 0x828417A8 = { name = "rex_sub_828417A8", size = 0x404 }
 0x82841BB0 = { name = "rex_sub_82841BB0", size = 0x134 }
 0x82841CE8 = { name = "rex_sub_82841CE8", size = 0x580 }
-0x82842268 = { name = "rex_sub_82842268", size = 0xA8 }
 0x82842310 = { name = "rex_sub_82842310", size = 0x168 }
 0x82842478 = { name = "rex_sub_82842478", size = 0x23C }
 0x828426B8 = { name = "rex_sub_828426B8", size = 0x360 }
 0x82842A20 = { name = "rex_sub_82842A20", size = 0x5C8 }
-0x82842FF0 = { name = "rex_sub_82842FF0", size = 0x8F0 }
-0x828438E8 = { name = "rex_sub_828438E8", size = 0x2EC }
-0x82843BE0 = { name = "rex_sub_82843BE0", size = 0x8AC }
 0x8284448C = { name = "rex_sub_8284448C", size = 0x24 }
 0x828444B0 = { name = "rex_sub_828444B0", size = 0xC }
 0x828444C0 = { name = "rex_sub_828444C0", size = 0xC }
@@ -64321,7 +64363,6 @@ d3d12_readback_resolve = true
 0x82BBE320 = { name = "rex_sub_82BBE320", size = 0x1C }
 0x82BBE340 = { name = "_lstrcmpiA", size = 0x8C }
 0x82BBE3D0 = { name = "rex_sub_82BBE3D0", size = 0x8C }
-0x82BBE460 = { name = "rex_sub_82BBE460", size = 0x1A0 }
 0x82BBE610 = { name = "XHashMemoryEnd", size = 0x8 }
 0x82BBE618 = { name = "rex_sub_82BBE618", size = 0x1D4 }
 0x82BBE7F0 = { name = "rex_sub_82BBE7F0", size = 0xC }

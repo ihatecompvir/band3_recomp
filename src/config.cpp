@@ -41,8 +41,6 @@ void LoadConfig(const char* path) {
         reader.GetBoolean("game", "fast_start", g_config.fast_start);
     g_config.disable_metamusic =
         reader.GetBoolean("game", "disable_metamusic", g_config.disable_metamusic);
-    g_config.game_data_root =
-        reader.Get("paths", "game_data_root", g_config.game_data_root);
     g_config.lang =
         reader.Get("game", "lang", g_config.lang);
     g_config.disable_approximate_lights =
@@ -55,6 +53,8 @@ void LoadConfig(const char* path) {
         reader.GetBoolean("graphics", "fullbright", g_config.fullbright);
     g_config.disable_even_odd_rendering =
         reader.GetBoolean("graphics", "disable_even_odd_rendering", g_config.disable_even_odd_rendering);
+    g_config.game_data_root =
+        reader.Get("paths", "game_data_root", g_config.game_data_root);
     g_config.username =
         reader.Get("profile", "username", g_config.username);
     g_config.main_heap_size =

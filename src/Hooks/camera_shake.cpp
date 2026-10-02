@@ -104,7 +104,7 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	ctx.f31.f64 = double(float(ctx.f12.f64 * ctx.f0.f64));
 	// bl RandomFloat
 	ctx.lr = 0x824BDBFC;
-	rex_sub_824F3000(ctx, base);
+	RandomFloat_void(ctx, base);
 	// fcmpu cr6,f1,f29
 	ctx.fpscr.disableFlushMode();
 
@@ -121,13 +121,13 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	ctx.f2.f64 = double(temp.f32);
 	// bl RandomFloat(min, max)
 	ctx.lr = 0x824BDC14;
-	rex_sub_824F3160(ctx, base);
+	RandomFloat_float_float(ctx, base);
 	// fmr f29,f1
 	ctx.fpscr.disableFlushMode();
 	ctx.f29.f64 = ctx.f1.f64;
 	// bl RandomFloat
 	ctx.lr = 0x824BDC1C;
-	rex_sub_824F3000(ctx, base);
+	RandomFloat_void(ctx, base);
 	// lis r11,-32252
 	ctx.r11.s64 = -2113667072;
 	// fmuls f26,f1,f28
@@ -140,7 +140,7 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	ctx.f1.f64 = double(float(ctx.f29.f64 + ctx.f0.f64));
 	// bl Sine
 	ctx.lr = 0x824BDC30;
-	rex_sub_824F4D68(ctx, base);
+	Sine(ctx, base);
 	// fmuls f13,f1,f26
 	ctx.fpscr.disableFlushMode();
 	ctx.f13.f64 = double(float(ctx.f1.f64 * ctx.f26.f64));
@@ -169,7 +169,7 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	REX_STORE_U32(ctx.r31.u32 + 328, temp.u32);
 	// bl Sine
 	ctx.lr = 0x824BDC5C;
-	rex_sub_824F4D68(ctx, base);
+	Sine(ctx, base);
 	// lfs f0,336(r31)
 	ctx.fpscr.disableFlushMode();
 	temp.u32 = REX_LOAD_U32(ctx.r31.u32 + 336);
@@ -185,7 +185,7 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	ctx.f1.u64 = ctx.f31.u64 ^ 0x8000000000000000;
 	// bl RandomFloat(min, max)
 	ctx.lr = 0x824BDC74;
-	rex_sub_824F3160(ctx, base);
+	RandomFloat_float_float(ctx, base);
 	// lfs f0,344(r31)
 	ctx.fpscr.disableFlushMode();
 	temp.u32 = REX_LOAD_U32(ctx.r31.u32 + 344);
@@ -204,7 +204,7 @@ extern "C" REX_FUNC(CamShot__Shake) {
 	ctx.f1.u64 = ctx.f27.u64 ^ 0x8000000000000000;
 	// bl RandomFloat(min, max)
 	ctx.lr = 0x824BDC90;
-	rex_sub_824F3160(ctx, base);
+	RandomFloat_float_float(ctx, base);
 	// lfs f0,352(r31)
 	ctx.fpscr.disableFlushMode();
 	temp.u32 = REX_LOAD_U32(ctx.r31.u32 + 352);
@@ -362,7 +362,7 @@ loc_824BDD54:
 	ctx.f27.f64 = double(float(ctx.f12.f64 - ctx.f0.f64));
 	// bl RndPostProc::Current
 	ctx.lr = 0x824BDD80;
-	rex_sub_8242ED90(ctx, base);
+	RndPostProc__Current(ctx, base);
 	// lis r11,-32255
 	ctx.r11.s64 = -2113863680;
 	// cmplwi r3,0
@@ -375,7 +375,7 @@ loc_824BDD54:
 	if (ctx.cr0.eq) goto loc_824BDDAC;
 	// bl RndPostProc::Current
 	ctx.lr = 0x824BDD94;
-	rex_sub_8242ED90(ctx, base);
+	RndPostProc__Current(ctx, base);
 	// lfs f0,360(r3)
 	ctx.fpscr.disableFlushMode();
 	temp.u32 = REX_LOAD_U32(ctx.r3.u32 + 360);
@@ -386,7 +386,7 @@ loc_824BDD54:
 	if (!ctx.cr6.gt) goto loc_824BDDAC;
 	// bl RndPostProc::Current
 	ctx.lr = 0x824BDDA4;
-	rex_sub_8242ED90(ctx, base);
+	RndPostProc__Current(ctx, base);
 	// lfs f0,360(r3)
 	ctx.fpscr.disableFlushMode();
 	temp.u32 = REX_LOAD_U32(ctx.r3.u32 + 360);

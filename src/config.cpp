@@ -42,7 +42,7 @@ void LoadConfig(const char* path) {
     g_config.disable_metamusic =
         reader.GetBoolean("game", "disable_metamusic", g_config.disable_metamusic);
     g_config.game_data_root =
-        reader.Get("paths", "game_data_root", g_config.game_data_root);
+        reader.Get("game", "game_data_root", g_config.game_data_root);
     g_config.lang =
         reader.Get("game", "lang", g_config.lang);
     g_config.disable_approximate_lights =

@@ -1,5 +1,5 @@
 [project]
-sdk_version = "0.8.0.31"
+sdk_version = "0.10.0"
 name = "band3"
 
 [entrypoint]
@@ -11,5 +11,4 @@ includes = [
 
 longjmp_address = 0x82BBB620
 setjmp_address = 0x82BBBA50
-d3d12_readback_resolve = true
 

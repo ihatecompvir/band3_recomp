@@ -20,4 +20,4 @@ else()
     add_executable(band3 ${BAND3_SOURCES})
 endif()
 
-rexglue_setup_target(band3)
+rexglue_setup_target(band3 GPU_PLUGINS xenos)
